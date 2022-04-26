@@ -1,8 +1,7 @@
 namespace DevInSales.Core.Entities
 {
-    public class City
+    public class City : Entity
     {
-        public int Id { get; private set; }
         public int StateId { get; private set; }
         public string Name { get; private set; }
         public State State { get; set; }

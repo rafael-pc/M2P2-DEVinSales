@@ -1,14 +1,13 @@
 namespace DevInSales.Core.Entities
 {
-    public class State
+    public class State : Entity
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Initials { get; private set; }
-
         public List<City> Cities { get; set; }
-        public State(string name, string initials)
+        public State(int id, string name, string initials) 
         {
+            Id = id;
             Name = name;
             Initials = initials;
         }

@@ -1,8 +1,7 @@
 namespace DevInSales.Core.Entities
 {
-    public class Address
+    public class Address : Entity
     {
-        public int Id { get; private set; }
         public int CityId { get; private set; }
         public string Street { get; private set; }
         public string Cep { get; private set; }

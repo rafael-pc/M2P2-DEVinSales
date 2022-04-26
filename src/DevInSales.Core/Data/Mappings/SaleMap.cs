@@ -24,7 +24,8 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasOne(p => p.Seller)
                 .WithMany()
                 .HasForeignKey(p => p.SellerId)
-                .OnDelete(DeleteBehavior.NoAction);                 
+                .OnDelete(DeleteBehavior.NoAction);         
+                        
         }
     }
 }

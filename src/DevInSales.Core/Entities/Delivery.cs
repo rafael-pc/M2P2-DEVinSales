@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace DevInSales.Core.Entities
 {
-    internal class Class1
+    public class Delivery : Entity
     {
+        public int AdressId { get; private set; }
+        public int SaleId { get; private set; }
+        public DateTime DeliveryForecast { get; private set; }
+
+        public Delivery(int adressId, int saleId, DateTime deliveryForecast)
+        {
+            AdressId = adressId;
+            SaleId = saleId;
+            DeliveryForecast = deliveryForecast;
+        }
     }
 }

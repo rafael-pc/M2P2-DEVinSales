@@ -6,6 +6,7 @@ namespace DevInSales.Core.Entities
         public string Name { get; private set; }
         public string Initials { get; private set; }
 
+        public List<City> Cities { get; set; }
         public State(string name, string initials)
         {
             Name = name;

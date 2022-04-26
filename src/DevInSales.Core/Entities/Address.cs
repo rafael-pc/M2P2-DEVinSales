@@ -8,6 +8,7 @@ namespace DevInSales.Core.Entities
         public string Cep { get; private set; }
         public int Number { get; private set; }
         public string Complement { get; private set; }
+        public City City { get; set; }
 
         public Address(string street, string cep, int number, string complement)
         {

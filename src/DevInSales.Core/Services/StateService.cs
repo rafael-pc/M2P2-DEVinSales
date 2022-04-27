@@ -17,9 +17,14 @@ namespace DevInSales.Core.Services
         public List<State> GetAll(string name)
         {
             return _context.States
-                .Include(p => p.Cities)
                 .Where(p => !String.IsNullOrWhiteSpace(name) ? p.Name.ToUpper().Contains(name.ToUpper()) : true)
                 .ToList();
+        }
+
+        public State GetById(int id)
+        {
+            return _context.States
+                .SingleOrDefault(p => p.Id == id);
         }
     }
 }

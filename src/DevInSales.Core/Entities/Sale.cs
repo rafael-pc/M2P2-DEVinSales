@@ -10,16 +10,14 @@ namespace DevInSales.Core.Entities
 
         public Sale(int buyerId, int sellerId, DateTime saleDate)
         {
-
             BuyerId = buyerId;
             SellerId = sellerId;
             SaleDate = saleDate;
-
         }
         public int BuyerId { get; private set; }
         public int SellerId { get; private set; }
-        public DateTime SaleDate { get; private set; }
-
-
+        public DateTime SaleDate { get; private set; }        
+        public User? Buyer { get; private set; }
+        public User? Seller { get; private set; }
     }
 }

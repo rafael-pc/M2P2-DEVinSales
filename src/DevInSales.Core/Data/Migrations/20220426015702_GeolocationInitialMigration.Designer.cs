@@ -3,6 +3,7 @@ using System;
 using DevInSales.Core.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DevInSales.Core.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220426015702_GeolocationInitialMigration")]
+    partial class GeolocationInitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,170 +130,6 @@ namespace DevInSales.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("States", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Initials = "AC",
-                            Name = "Acre"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Initials = "AL",
-                            Name = "Alagoas"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Initials = "AP",
-                            Name = "Amapá"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Initials = "AM",
-                            Name = "Amazonas"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Initials = "BA",
-                            Name = "Bahia"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Initials = "CE",
-                            Name = "Ceará"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Initials = "DF",
-                            Name = "Distrito Federal"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Initials = "ES",
-                            Name = "Espírito Santo"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Initials = "GO",
-                            Name = "Goiás"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Initials = "MA",
-                            Name = "Maranhão"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Initials = "MT",
-                            Name = "Mato Grosso"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Initials = "MS",
-                            Name = "Mato Grosso do Sul"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Initials = "MG",
-                            Name = "Minas Gerais"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Initials = "PA",
-                            Name = "Pará"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Initials = "PB",
-                            Name = "Paraíba"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Initials = "PR",
-                            Name = "Paraná"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Initials = "PE",
-                            Name = "Pernambuco"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Initials = "PI",
-                            Name = "Piauí"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Initials = "RJ",
-                            Name = "Rio de Janeiro"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Initials = "RN",
-                            Name = "Rio Grande do Norte"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Initials = "RS",
-                            Name = "Rio Grande do Sul"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Initials = "RO",
-                            Name = "Rondônia"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Initials = "RR",
-                            Name = "Roraima"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Initials = "SC",
-                            Name = "Santa Catarina"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Initials = "SP",
-                            Name = "São Paulo"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Initials = "SE",
-                            Name = "Sergipe"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Initials = "TO",
-                            Name = "Tocantins"
-                        });
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.User", b =>

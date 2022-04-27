@@ -14,5 +14,8 @@ namespace DevInSales.Core.Entities
             UnitPrice = unitPrice;
             Amount = amount;
         }
+        public Sale? Sales { get; private set; }
+        public Product? Products { get; private set; }
+        
     }
 }

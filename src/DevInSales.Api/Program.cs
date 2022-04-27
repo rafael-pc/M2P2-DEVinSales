@@ -1,4 +1,6 @@
 using DevInSales.Core.Data.Context;
+using DevInSales.Core.Interfaces;
+using DevInSales.Core.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLConnection"))
 );
+
+builder.Services.AddScoped<IStateService, StateService>();
 
 var app = builder.Build();
 

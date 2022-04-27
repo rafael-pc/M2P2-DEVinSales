@@ -4,27 +4,27 @@ using DevInSales.Core.Entities;
 
 namespace DevInSales.Core.Data.Mappings
 {
-    public class SaleMap : IEntityTypeConfiguration<Sale>
+    public class DeliveryMap : IEntityTypeConfiguration<Delivery>
     {
-        public void Configure(EntityTypeBuilder<Sale> builder)
+        public void Configure(EntityTypeBuilder<Delivery> builder)
         {
-            builder.ToTable("Sales");
+            builder.ToTable("Deliveries");
 
             // Opcional, pois por convenção nossa propriedade já seria a chave primária
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.SaleDate)
+            builder.Property(p => p.DeliveryForecast)
                 .HasColumnType("timestamp");
 
-            builder.HasOne(p => p.Buyer)
+            builder.HasOne(p => p.Sale)
                 .WithMany()
-                .HasForeignKey(p => p.BuyerId)
+                .HasForeignKey(p => p.SaleId)
                 .OnDelete(DeleteBehavior.NoAction);           
 
-            builder.HasOne(p => p.Seller)
+            builder.HasOne(p => p.Address)
                 .WithMany()
-                .HasForeignKey(p => p.SellerId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .HasForeignKey(p => p.AdressId)
+                .OnDelete(DeleteBehavior.NoAction);                 
         }
     }
 }

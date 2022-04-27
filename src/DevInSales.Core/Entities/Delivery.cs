@@ -17,6 +17,8 @@ namespace DevInSales.Core.Entities
             AdressId = adressId;
             SaleId = saleId;
             DeliveryForecast = deliveryForecast;
-        }
+        }        
+        public Sale? Sale { get; private set; }  
+        public Address? Address { get; private set; }        
     }
 }

@@ -23,5 +23,15 @@ namespace DevInSales.Api.Controllers
 
             return Ok(statesList);
         }
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var state = _stateService.GetById(id);
+
+            if (state == null)
+                return NotFound();
+
+            return Ok(state);
+        }
     }
 }

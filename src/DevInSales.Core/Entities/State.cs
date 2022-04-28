@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using DevInSales.Core.Data.Dtos;
 
 namespace DevInSales.Core.Entities
 {
@@ -6,13 +7,26 @@ namespace DevInSales.Core.Entities
     {
         public string Name { get; private set; }
         public string Initials { get; private set; }
-        [JsonIgnore]
         public List<City> Cities { get; set; }
-        public State(int id, string name, string initials) 
+
+        public State(int id, string name, string initials)
         {
             Id = id;
             Name = name;
             Initials = initials;
+        }
+
+        public ReadState ToReadState(State state)
+        {
+            return new ReadState
+            {
+                Id = state.Id,
+                Name = state.Name,
+                Initials = state.Initials,
+                Cities = state.Cities
+                    .Select(c => new ReadStateCities { Id = c.Id, Name = c.Name })
+                    .ToList()
+            };
         }
     }
 }

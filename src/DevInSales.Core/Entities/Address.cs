@@ -1,3 +1,5 @@
+using DevInSales.Core.Data.Dtos;
+
 namespace DevInSales.Core.Entities
 {
     public class Address : Entity
@@ -15,6 +17,25 @@ namespace DevInSales.Core.Entities
             Cep = cep;
             Number = number;
             Complement = complement;
+        }
+
+        public ReadAddress ToReadAddress(Address address)
+        {
+            return new ReadAddress
+            {
+                Id = address.Id,
+                Street = address.Street,
+                Cep = address.Cep,
+                Number = address.Number,
+                Complement = address.Complement,
+                City = new ReadAddressCity { Id = address.City.Id, Name = address.City.Name },
+                State = new ReadCityState
+                {
+                    Id = address.City.State.Id,
+                    Name = address.City.State.Name,
+                    Initials = address.City.State.Initials
+                }
+            };
         }
     }
 }

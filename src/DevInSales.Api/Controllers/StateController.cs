@@ -23,15 +23,29 @@ namespace DevInSales.Api.Controllers
 
             return Ok(statesList);
         }
-        [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        [HttpGet("{stateId}")]
+        public ActionResult GetByStateId(int stateId)
         {
-            var state = _stateService.GetById(id);
+            var state = _stateService.GetByStateId(stateId);
 
             if (state == null)
                 return NotFound();
 
             return Ok(state);
+        }
+
+        [HttpGet("{stateId}/city")]
+        public ActionResult GetCityByStateId(int stateId, string? name)
+        {
+            var state = _stateService.GetByStateId(stateId);
+            if (state == null)
+                return NotFound();
+
+            var citiesList = _stateService.GetCityByStateId(stateId, name);
+            if (citiesList == null || citiesList.Count == 0)
+                return NoContent();
+
+            return Ok(citiesList);
         }
     }
 }

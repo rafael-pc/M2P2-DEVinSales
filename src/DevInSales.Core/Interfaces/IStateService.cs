@@ -5,6 +5,8 @@ namespace DevInSales.Core.Interfaces
     public interface IStateService
     {
         List<State> GetAll(string name);
-        State GetById(int id);
+        State GetByStateId(int stateId);
+
+        List<City> GetCityByStateId(int stateId, string name);
     }
 }

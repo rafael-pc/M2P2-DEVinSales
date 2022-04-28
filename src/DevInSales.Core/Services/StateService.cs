@@ -21,10 +21,26 @@ namespace DevInSales.Core.Services
                 .ToList();
         }
 
-        public State GetById(int id)
+        public State GetByStateId(int stateId)
         {
             return _context.States
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefault(p => p.Id == stateId);
         }
+
+        public List<City> GetCityByStateId(int stateId, string name)
+        {
+            return _context.Cities
+                .Where(
+                    p =>
+                        p.StateId == stateId
+                        && (
+                            !String.IsNullOrWhiteSpace(name)
+                                ? p.Name.ToUpper().Contains(name.ToUpper())
+                                : true
+                        )
+                )
+                .ToList();
+        }
+
     }
 }

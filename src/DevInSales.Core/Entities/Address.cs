@@ -1,3 +1,5 @@
+using DevInSales.Core.Data.Dtos;
+
 namespace DevInSales.Core.Entities
 {
     public class Address : Entity

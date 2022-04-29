@@ -1,5 +1,5 @@
 using DevInSales.Core.Data.Context;
-using DevInSales.Core.Entities;
+using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,33 +14,24 @@ namespace DevInSales.Core.Services
             _context = context;
         }
 
-        public List<State> GetAll(string name)
+        public List<ReadState> GetAll(string? name)
         {
             return _context.States
-                .Where(p => !String.IsNullOrWhiteSpace(name) ? p.Name.ToUpper().Contains(name.ToUpper()) : true)
-                .ToList();
-        }
-
-        public State GetByStateId(int stateId)
-        {
-            return _context.States
-                .SingleOrDefault(p => p.Id == stateId);
-        }
-
-        public List<City> GetCityByStateId(int stateId, string name)
-        {
-            return _context.Cities
+                .Include(p => p.Cities)
                 .Where(
                     p =>
-                        p.StateId == stateId
-                        && (
-                            !String.IsNullOrWhiteSpace(name)
-                                ? p.Name.ToUpper().Contains(name.ToUpper())
-                                : true
-                        )
+                        !String.IsNullOrWhiteSpace(name)
+                            ? p.Name.ToUpper().Contains(name.ToUpper())
+                            : true
                 )
+                .Select(s => ReadState.StateToReadState(s))
                 .ToList();
         }
 
+        public ReadState GetById(int stateId)
+        {
+            var state = _context.States.Include(p => p.Cities).FirstOrDefault(p => p.Id == stateId);
+            return ReadState.StateToReadState(state);
+        }
     }
 }

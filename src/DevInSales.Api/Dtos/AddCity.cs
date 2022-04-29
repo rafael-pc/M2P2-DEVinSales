@@ -1,4 +1,4 @@
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Api.Dtos
 {
     public record AddCity(string name) { }
 }

@@ -1,6 +1,7 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Core.Services
 {
@@ -13,7 +14,7 @@ namespace DevInSales.Core.Services
             _context = context;
         }
 
-        public List<ReadCity> GetById(int stateId, string? name)
+        public List<ReadCity> GetAll(int stateId, string? name)
         {
             return _context.Cities
                 .Where(
@@ -27,6 +28,15 @@ namespace DevInSales.Core.Services
                 )
                 .Select(c => ReadCity.CityToReadCity(c))
                 .ToList();
+        }
+
+        public ReadCity GetById(int cityId)
+        {
+            var city = _context.Cities
+                .Include(p => p.State)
+                .FirstOrDefault(p => p.Id == cityId);
+
+            return ReadCity.CityToReadCity(city);
         }
     }
 }

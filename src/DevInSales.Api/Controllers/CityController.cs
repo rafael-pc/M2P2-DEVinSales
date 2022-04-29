@@ -22,11 +22,27 @@ namespace DevInSales.Api.Controllers
             if (state == null)
                 return NotFound();
 
-            var citiesList = _cityService.GetById(stateId, name);
+            var citiesList = _cityService.GetAll(stateId, name);
             if (citiesList == null || citiesList.Count == 0)
                 return NoContent();
 
             return Ok(citiesList);
+        }
+        [HttpGet("/api/State/{stateId}/city/{cityId}")]
+        public ActionResult GetCityById(int stateId, int cityId)
+        {
+            var state = _stateService.GetById(stateId);
+            if (state == null)
+                return NotFound();
+
+            var city = _cityService.GetById(cityId);
+            if (city == null)
+                return NotFound();
+
+            if (state.Id != city.State.Id)
+                return BadRequest();
+
+            return Ok(city);
         }
     }
 }

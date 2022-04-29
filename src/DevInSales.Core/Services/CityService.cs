@@ -25,7 +25,7 @@ namespace DevInSales.Core.Services
                                 : true
                         )
                 )
-                .Select(c => c.ToReadCity(c))
+                .Select(c => ReadCity.CityToReadCity(c))
                 .ToList();
         }
     }

@@ -24,14 +24,14 @@ namespace DevInSales.Core.Services
                             ? p.Name.ToUpper().Contains(name.ToUpper())
                             : true
                 )
-                .Select(s => s.ToReadState(s))
+                .Select(s => ReadState.StateToReadState(s))
                 .ToList();
         }
 
         public ReadState GetById(int stateId)
         {
             var state = _context.States.Include(p => p.Cities).FirstOrDefault(p => p.Id == stateId);
-            return state?.ToReadState(state);
+            return ReadState.StateToReadState(state);
         }
     }
 }

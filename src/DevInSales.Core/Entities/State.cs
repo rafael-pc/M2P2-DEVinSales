@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using DevInSales.Core.Data.Dtos;
-
 namespace DevInSales.Core.Entities
 {
     public class State : Entity
@@ -16,17 +13,5 @@ namespace DevInSales.Core.Entities
             Initials = initials;
         }
 
-        public ReadState ToReadState(State state)
-        {
-            return new ReadState
-            {
-                Id = state.Id,
-                Name = state.Name,
-                Initials = state.Initials,
-                Cities = state.Cities
-                    .Select(c => new ReadStateCities { Id = c.Id, Name = c.Name })
-                    .ToList()
-            };
-        }
     }
 }

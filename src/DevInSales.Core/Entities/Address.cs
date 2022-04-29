@@ -18,24 +18,5 @@ namespace DevInSales.Core.Entities
             Number = number;
             Complement = complement;
         }
-
-        public ReadAddress ToReadAddress(Address address)
-        {
-            return new ReadAddress
-            {
-                Id = address.Id,
-                Street = address.Street,
-                Cep = address.Cep,
-                Number = address.Number,
-                Complement = address.Complement,
-                City = new ReadAddressCity { Id = address.City.Id, Name = address.City.Name },
-                State = new ReadCityState
-                {
-                    Id = address.City.State.Id,
-                    Name = address.City.State.Name,
-                    Initials = address.City.State.Initials
-                }
-            };
-        }
     }
 }

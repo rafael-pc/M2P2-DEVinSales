@@ -1,5 +1,6 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,12 @@ namespace DevInSales.Core.Services
                 .FirstOrDefault(p => p.Id == cityId);
 
             return ReadCity.CityToReadCity(city);
+        }
+
+        public void Add(City city)
+        {
+            _context.Cities.Add(city);
+            _context.SaveChanges();
         }
     }
 }

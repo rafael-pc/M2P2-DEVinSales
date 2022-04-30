@@ -1,7 +1,7 @@
 
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
@@ -30,11 +30,11 @@ namespace DevInSales.Api.Controllers
 
         [HttpGet("/user/{userId}/sales")]
         public ActionResult<Sale> GetSales(int? userId)
-        {      
+        {
             var sales = _saleService.GetSellerById(userId);
             if (sales.Count == 0)
                 return NoContent();
-            return Ok(sales);                           
-        }                 
+            return Ok(sales);
+        }
     }
 }

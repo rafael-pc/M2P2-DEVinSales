@@ -1,10 +1,10 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevInSales.Core.Service
+namespace DevInSales.Core.Services
 {
     public class SaleService : ISaleService
     {

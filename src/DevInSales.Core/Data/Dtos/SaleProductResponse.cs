@@ -9,16 +9,18 @@ namespace DevInSales.Core.Data.Dtos
     public class SaleProductResponse
     {
         public string ProductName { get; set; }
-        public int Amount { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal Total { get; set; }
+        public int? Amount { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public decimal? Total { get; set; }
 
-        public SaleProductResponse(string productName, int amount, decimal unitPrice, decimal total)
+        public SaleProductResponse(string productName, int? amount, decimal? unitPrice, decimal? total)
         {
             ProductName = productName;
             Amount = amount;
             UnitPrice = unitPrice;
             Total = total;
         }
+
+        
     }
 }

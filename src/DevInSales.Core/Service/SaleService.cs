@@ -3,6 +3,7 @@ using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DevInSales.Core.Service
 {

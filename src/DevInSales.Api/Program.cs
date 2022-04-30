@@ -17,6 +17,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IStateService, StateService>();
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 var app = builder.Build();
 

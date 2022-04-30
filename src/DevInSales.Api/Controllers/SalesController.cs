@@ -28,5 +28,13 @@ namespace DevInSales.Api.Controllers
             return Ok(sale);
         }
 
+        [HttpGet("/user/{userId}/sales")]
+        public ActionResult<Sale> GetSales(int? userId)
+        {      
+            var sales = _saleService.GetSellerById(userId);
+            if (sales.Count == 0)
+                return NoContent();
+            return Ok(sales);                           
+        }                 
     }
 }

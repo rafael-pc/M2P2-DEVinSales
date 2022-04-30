@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DevInSales.Core.Entities
@@ -17,7 +18,10 @@ namespace DevInSales.Core.Entities
         public int BuyerId { get; private set; }
         public int SellerId { get; private set; }
         public DateTime SaleDate { get; private set; }        
+
+        [JsonIgnore]        
         public User? Buyer { get; private set; }
+        [JsonIgnore]     
         public User? Seller { get; private set; }
     }
 }

@@ -18,12 +18,7 @@ namespace DevInSales.Core.Data.Dtos
         public int BuyerId { get; private set; }
         public DateTime SaleDate { get; private set; }
 
-        public void DefinirSaleDateParaHoje()
-        {
-            SaleDate = DateTime.Now.ToUniversalTime();
-        }
-
-        public Sale ConverterParaEntidade(int userId)
+        public Sale ConvertToEntity(int userId)
         {
             return new Sale(BuyerId, userId, SaleDate);
         }

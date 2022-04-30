@@ -42,7 +42,7 @@ namespace DevInSales.Api.Controllers
         {
             try
             {
-                Sale sale = saleRequest.ConverterParaEntidade(userId);
+                Sale sale = saleRequest.ConvertToEntity(userId);
                 var id = _saleService.CreateSaleByUserId(sale);
                 return CreatedAtAction(nameof(GetSaleById), new { saleId = id }, id);
             }

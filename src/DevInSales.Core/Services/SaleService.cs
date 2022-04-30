@@ -18,7 +18,7 @@ namespace DevInSales.Core.Services
         {
             
             if (sale.SaleDate == DateTime.MinValue)
-                sale.DefinirSaleDateParaHoje();
+                sale.SetSaleDateToToday();
             if (sale.BuyerId == 0 || sale.SellerId == 0)
                 throw new ArgumentNullException("Id não pode ser nulo nem zero.");
             if (!_context.Users.Any(user => user.Id == sale.BuyerId))

@@ -44,5 +44,10 @@ namespace DevInSales.Core.Service
                 .Select(p => new SaleProductResponse(p.Products.Name, p.Amount, p.UnitPrice, p.Amount * p.UnitPrice))
                 .ToList();
         }
+
+        public List<Sale> GetSellerById(int? userId)
+        {
+            return _context.Sales.Where(p => p.SellerId == userId).ToList();
+        }
     }
 }

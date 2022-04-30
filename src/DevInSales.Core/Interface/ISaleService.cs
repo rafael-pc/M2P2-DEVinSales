@@ -5,11 +5,8 @@ namespace DevInSales.Core.Interface
 {
     public interface ISaleService
     {
-        //GetSale por Id
         public SaleResponse GetSaleById(int id);
-        //PostSale
         public int CreateSale(Sale sale);
-        //Patch
-        //Aguardando...        
+        public List<Sale> GetSellerById(int? userId);     
     }
 }

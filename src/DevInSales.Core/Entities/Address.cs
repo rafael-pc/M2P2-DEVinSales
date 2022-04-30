@@ -11,12 +11,13 @@ namespace DevInSales.Core.Entities
         public string Complement { get; private set; }
         public City City { get; set; }
 
-        public Address(string street, string cep, int number, string complement)
+        public Address(string street, string cep, int number, string complement, int cityId)
         {
             Street = street;
             Cep = cep;
             Number = number;
             Complement = complement;
+            CityId = cityId;
         }
     }
 }

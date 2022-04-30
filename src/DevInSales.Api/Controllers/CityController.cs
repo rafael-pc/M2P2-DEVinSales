@@ -1,3 +1,5 @@
+using DevInSales.Api.Dtos;
+using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +30,7 @@ namespace DevInSales.Api.Controllers
 
             return Ok(citiesList);
         }
+
         [HttpGet("/api/State/{stateId}/city/{cityId}")]
         public ActionResult GetCityById(int stateId, int cityId)
         {
@@ -43,6 +46,23 @@ namespace DevInSales.Api.Controllers
                 return BadRequest();
 
             return Ok(city);
+        }
+
+        [HttpPost("/api/State/{stateId}/city")]
+        public ActionResult AddCity(int stateId, AddCity model)
+        {
+            var state = _stateService.GetById(stateId);
+            if (state == null)
+                return NotFound();
+
+            var city = _cityService.GetAll(stateId, model.Name);
+            if(city != null && city.Count > 0)
+                return BadRequest();
+
+            var newCity = new City(stateId, model.Name);
+            _cityService.Add(newCity);
+
+            return CreatedAtAction(nameof(GetCityById), new { stateId, cityId = newCity.Id }, newCity.Id);
         }
     }
 }

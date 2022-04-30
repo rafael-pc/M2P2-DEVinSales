@@ -1,8 +1,8 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 
-namespace DevInSales.Core.Service
+namespace DevInSales.Core.Services
 {
     public class SaleService : ISaleService
     {
@@ -13,7 +13,7 @@ namespace DevInSales.Core.Service
             _context = context;
         }
         public int CreateSale(Sale sale)
-        {            
+        {
             throw new NotImplementedException();
         }
 

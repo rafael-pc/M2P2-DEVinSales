@@ -14,9 +14,22 @@ namespace DevInSales.Core.Services
         {
             _context = context;
         }
-        public int CreateSale(Sale sale)
+        public int CreateSaleByUserId(Sale sale)
         {
-            throw new NotImplementedException();
+            
+            if (sale.SaleDate == DateTime.MinValue)
+                sale.DefinirSaleDateParaHoje();
+            if (sale.BuyerId == 0 || sale.SellerId == 0)
+                throw new ArgumentNullException("Id não pode ser nulo nem zero.");
+            if (!_context.Users.Any(user => user.Id == sale.BuyerId))
+                throw new ArgumentException("BuyerId não encontrado.");
+            if (!_context.Users.Any(user => user.Id == sale.SellerId))
+                throw new ArgumentException("SellerId não encontrado.");
+
+            _context.Sales.Add(sale);
+            _context.SaveChanges();
+
+            return sale.Id;
         }
 
         public SaleResponse GetSaleById(int id)

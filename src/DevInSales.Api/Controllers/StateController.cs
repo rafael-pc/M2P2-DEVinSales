@@ -48,13 +48,11 @@ namespace DevInSales.Api.Controllers
         /// </summary>
         /// <remarks>
         /// Exemplo de resposta:
-        /// [
         ///   {
         ///     "id": 1,
         ///     "name": "Santa Catarina"
         ///     "initials": "SC"
         ///   }
-        /// ]
         /// </remarks>
         /// <returns>Lista de endereços</returns>
         /// <response code="200">Sucesso.</response>

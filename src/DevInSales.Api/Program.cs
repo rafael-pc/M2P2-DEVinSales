@@ -2,6 +2,7 @@ using DevInSales.Core.Data.Context;
 using DevInSales.Core.Interfaces;
 using DevInSales.Core.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,23 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IStateService, StateService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo{
+        Title = "DevInSales API",
+        Version = "v1",
+        Description = "Projeto 2 do módulo 2 do curso DevInHouse da turma WPP",
+        Contact = new OpenApiContact{
+            Name = "Turma WPP",
+            Url = new Uri("https://github.com/DEVin-Way2-Pixeon-Paradigma/M2P2-DEVinSales")
+        }
+    });
+    var xmlFile = "DevInSales.API.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    c.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 

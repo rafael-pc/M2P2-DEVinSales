@@ -17,6 +17,12 @@ namespace DevInSales.Core.Entities
         }
         public int BuyerId { get; private set; }
         public int SellerId { get; private set; }
+
+        public void SetSaleDateToToday()
+        {
+            SaleDate = DateTime.Now.ToUniversalTime();
+        }
+
         public DateTime SaleDate { get; private set; }        
 
         [JsonIgnore]        

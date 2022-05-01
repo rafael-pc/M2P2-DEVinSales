@@ -6,7 +6,9 @@ namespace DevInSales.Core.Interfaces
     public interface ISaleService
     {
         public SaleResponse GetSaleById(int id);
-        public int CreateSale(Sale sale);
+        
+        public int CreateSaleByUserId(Sale sale);
+        
         public List<Sale> GetSellerById(int? userId);
     }
 }

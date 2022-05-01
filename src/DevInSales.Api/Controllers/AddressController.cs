@@ -48,5 +48,32 @@ namespace DevInSales.Api.Controllers
 
       return CreatedAtAction(nameof(GetAll), new { stateId, cityId }, address.Id);
     }
+
+    [HttpPatch("{addressId}")]
+    public ActionResult UpdateByParam(int addressId, AddAddress model)
+    {
+      if (model == null)
+        return BadRequest();
+
+      var rAddress = _addressService.GetById(addressId);
+      if (rAddress == null)
+        return NotFound();
+
+      var address = new Address(rAddress.Street, rAddress.Cep, rAddress.Number, rAddress.Complement, rAddress.City.Id);
+
+      if (address.Street != model.Street && model.Street != null)
+        _addressService.UpdateStreet(address, model.Street);
+
+      if (address.Cep != model.Cep && model.Cep != null)
+        _addressService.UpdateCep(address, model.Cep);
+
+      if (address.Number != model.Number)
+        _addressService.UpdateNumber(address, model.Number);
+
+      if (address.Complement != model.Complement && model.Complement != null)
+        _addressService.UpdateComplement(address, model.Complement);
+
+      return Ok(address);
+    }
   }
 }

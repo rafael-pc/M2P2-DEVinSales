@@ -19,5 +19,22 @@ namespace DevInSales.Core.Entities
             Complement = complement;
             CityId = cityId;
         }
+
+        public void UpdateStreet(string street)
+        {
+            Street = street;
+        }
+        public void UpdateCep(string cep)
+        {
+            Cep = cep;
+        }
+        public void UpdateNumber(int number)
+        {
+            Number = number;
+        }
+        public void UpdateComplement(string complement)
+        {
+            Complement = complement;
+        }
     }
 }

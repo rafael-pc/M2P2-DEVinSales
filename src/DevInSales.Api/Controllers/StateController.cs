@@ -14,6 +14,25 @@ namespace DevInSales.Api.Controllers
             _stateService = stateService;
         }
 
+        /// <summary>
+        /// Buscar estados.
+        /// </summary>
+        /// <remarks>
+        /// Pesquisa opcional: name.
+        /// <para>
+        /// Exemplo de resposta:
+        /// [
+        ///   {
+        ///     "id": 1,
+        ///     "name": "Santa Catarina"
+        ///     "initials": "SC"
+        ///   }
+        /// ]
+        /// </para>
+        /// </remarks>
+        /// <returns>Lista de endereços</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         [HttpGet]
         public ActionResult GetAll(string? name)
         {
@@ -23,6 +42,21 @@ namespace DevInSales.Api.Controllers
 
             return Ok(statesList);
         }
+
+        /// <summary>
+        /// Buscar estados por id.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de resposta:
+        ///   {
+        ///     "id": 1,
+        ///     "name": "Santa Catarina"
+        ///     "initials": "SC"
+        ///   }
+        /// </remarks>
+        /// <returns>Lista de endereços</returns>
+        /// <response code="200">Sucesso.</response>
+        /// /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         [HttpGet("{stateId}")]
         public ActionResult GetByStateId(int stateId)
         {

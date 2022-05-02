@@ -19,6 +19,7 @@ namespace DevInSales.Api.Controllers
       _stateService = stateService;
       _cityService = cityService;
     }
+
     [HttpGet]
     public ActionResult GetAll(int? stateId, int? cityId, string? street, string? cep)
     {
@@ -50,30 +51,29 @@ namespace DevInSales.Api.Controllers
     }
 
     [HttpPatch("{addressId}")]
-    public ActionResult UpdateByParam(int addressId, AddAddress model)
+    public ActionResult UpdateAddress(int addressId, UpdateAddress model)
     {
-      if (model == null)
+      if (model.Street == null && model.Cep == null && model.Number == null && model.Complement == null)
         return BadRequest();
 
-      var rAddress = _addressService.GetById(addressId);
-      if (rAddress == null)
+      var address = _addressService.GetById(addressId);
+      if (address == null)
         return NotFound();
 
-      var address = new Address(rAddress.Street, rAddress.Cep, rAddress.Number, rAddress.Complement, rAddress.City.Id);
+      if (model.Street != null)
+        address.Street = model.Street;
 
-      if (address.Street != model.Street && model.Street != null)
-        _addressService.UpdateStreet(address, model.Street);
+      if (model.Cep != null)
+        address.Cep = model.Cep;
 
-      if (address.Cep != model.Cep && model.Cep != null)
-        _addressService.UpdateCep(address, model.Cep);
+      if (model.Number != null)
+        address.Number = model.Number.Value;
 
-      if (address.Number != model.Number)
-        _addressService.UpdateNumber(address, model.Number);
+      if (model.Complement != null)
+        address.Complement = model.Complement;
 
-      if (address.Complement != model.Complement && model.Complement != null)
-        _addressService.UpdateComplement(address, model.Complement);
-
-      return Ok(address);
+      _addressService.Update(address);
+      return NoContent();
     }
   }
 }

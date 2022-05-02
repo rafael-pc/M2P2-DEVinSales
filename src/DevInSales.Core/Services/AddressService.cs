@@ -15,14 +15,11 @@ namespace DevInSales.Core.Services
       _context = context;
     }
 
-    public ReadAddress GetById(int addressId)
+    public Address GetById(int addressId)
     {
-      var address = _context.Addresses
-          .Include(a => a.City)
-          .Include(a => a.City.State)
+      return _context.Addresses
+          .Include(p => p.City)
           .FirstOrDefault(p => p.Id == addressId);
-
-      return ReadAddress.AddressToReadAddress(address);
     }
     public List<ReadAddress> GetAll(int? stateId, int? cityId, string? street, string? cep)
     {
@@ -46,25 +43,12 @@ namespace DevInSales.Core.Services
       _context.Addresses.Add(address);
       _context.SaveChanges();
     }
-    public void UpdateStreet(Address address, string street)
+
+    public void Update(Address address)
     {
-      address.UpdateStreet(street);
+      _context.Addresses.Update(address);
       _context.SaveChanges();
     }
-    public void UpdateCep(Address address, string cep)
-    {
-      address.UpdateCep(cep);
-      _context.SaveChanges();
-    }
-    public void UpdateNumber(Address address, int number)
-    {
-      address.UpdateNumber(number);
-      _context.SaveChanges();
-    }
-    public void UpdateComplement(Address address, string complement)
-    {
-      address.UpdateStreet(complement);
-      _context.SaveChanges();
-    }
+    
   }
 }

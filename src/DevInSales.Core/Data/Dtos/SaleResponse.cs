@@ -8,11 +8,11 @@ namespace DevInSales.Core.Data.Dtos
 {
     public class SaleResponse
     {
-        public int SaleId { get; set; }
-        public string SellerName { get; set; }
-        public string BuyerName { get; set; }
-        public DateTime SaleDate { get; set; }
-        public List<SaleProductResponse> SaleProducts { get; set; }
+        public int SaleId { get; private set; }
+        public string SellerName { get; private set; }
+        public string BuyerName { get; private set; }
+        public DateTime SaleDate { get; private set; }
+        public List<SaleProductResponse> SaleProducts { get; private set; }
 
         public SaleResponse(int saleId, string sellerName, string buyerName, DateTime saleDate, List<SaleProductResponse> saleProducts)
         {

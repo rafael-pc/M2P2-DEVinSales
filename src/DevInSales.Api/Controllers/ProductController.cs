@@ -37,5 +37,22 @@ namespace DevInSales.Api.Controllers
 
             return NoContent();
         }
+        
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id){
+            try{
+                _productService.Delete(id);
+                return NoContent();
+            }
+            catch (Exception ex){
+                if(ex.Message.Contains("não existe"))
+                    return NotFound();
+                if(ex.HResult == -2146233088 )  
+                    return BadRequest("O produto especificado não pode ser excluido, pq já está atrelado a outra tabela!");
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });    
+            }
+            
+        }
     }
 }

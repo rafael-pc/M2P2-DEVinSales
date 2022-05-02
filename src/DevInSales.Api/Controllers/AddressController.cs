@@ -116,15 +116,14 @@ namespace DevInSales.Api.Controllers
         [HttpDelete("/address/{addressId}")]
         public ActionResult DeleteAddress(int addressId)
         {
-            try
-            {
-                _addressService.Delete(addressId);
-                return NoContent();
-            }
-            catch (Exception)
-            {
+            var address = _addressService.GetById(addressId);
+
+            if (address == null)
                 return NotFound();
-            }
+
+            _addressService.Delete(address);
+
+            return NoContent();
         }
     }
 }

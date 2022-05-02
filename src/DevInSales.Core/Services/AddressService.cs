@@ -40,15 +40,10 @@ namespace DevInSales.Core.Services
 
         public Address? GetById(int addressId)
         {
-            return _context.Addresses.Where(p => p.Id == addressId).FirstOrDefault();
+            return _context.Addresses.FirstOrDefault(p => p.Id == addressId);
         }
-        public void Delete(int addressId)
+        public void Delete(Address address)
         {
-            var address = GetById(addressId);
-
-            if (address == null)
-                throw new Exception("Address is null");
-
             _context.Addresses.Remove(address);
             _context.SaveChanges();
         }

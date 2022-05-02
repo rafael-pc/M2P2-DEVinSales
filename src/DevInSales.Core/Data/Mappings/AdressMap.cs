@@ -38,7 +38,6 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasOne(p => p.City)
                 .WithMany(p => p.Addresses)
                 .HasForeignKey(p => p.CityId);
-                
         }
     }
 }

@@ -8,6 +8,6 @@ namespace DevInSales.Core.Interfaces
         List<ReadAddress> GetAll(int? stateId, int? cityId, string? street, string? cep);
         Address? GetById(int addressId);
         void Add(Address address);
-        void Delete(int addressId);
+        void Delete(Address address);
     }
 }

@@ -106,5 +106,25 @@ namespace DevInSales.Api.Controllers
 
             return CreatedAtAction(nameof(GetAll), new { stateId, cityId }, address.Id);
         }
+
+        /// <summary>
+        /// Deletar um endereço
+        /// </summary>
+        /// <response code="204">Endereço deletado com sucesso</response>
+        /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
+        /// <response code="404">Not Found, endereço não encontrado.</response>
+        [HttpDelete("/address/{addressId}")]
+        public ActionResult DeleteAddress(int addressId)
+        {
+            try
+            {
+                _addressService.Delete(addressId);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
     }
 }

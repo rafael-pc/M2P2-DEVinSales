@@ -21,7 +21,7 @@ namespace DevInSales.Api.Controllers
                 return NotFound();
             return Ok(produto);
         }
-
+        
         [HttpPut("{id}")]
         public ActionResult AtualizarProduto(Product product,int id) {
             var produto  = _productService.ObterProductPorId(id);

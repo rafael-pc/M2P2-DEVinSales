@@ -47,7 +47,27 @@ namespace DevInSales.Api.Controllers
         }
 
         [HttpPost("/user/{userId}/sales")]
-        public ActionResult<int> CreateSale(int userId, SaleBySellerRequest saleRequest)
+        public ActionResult<int> CreateSaleBySellerId(int userId, SaleBySellerRequest saleRequest)
+        {
+            try
+            {
+                Sale sale = saleRequest.ConvertToEntity(userId);
+                var id = _saleService.CreateSaleByUserId(sale);
+                return CreatedAtAction(nameof(GetSaleById), new { saleId = id }, id);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+        }
+
+        [HttpPost("/user/{userId}/buy")]
+        public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
         {
             try
             {

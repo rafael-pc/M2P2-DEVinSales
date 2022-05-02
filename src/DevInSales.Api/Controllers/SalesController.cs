@@ -29,9 +29,18 @@ namespace DevInSales.Api.Controllers
         }
 
         [HttpGet("/user/{userId}/sales")]
-        public ActionResult<Sale> GetSales(int? userId)
+        public ActionResult<Sale> GetSalesBySellerId(int? userId)
         {
-            var sales = _saleService.GetSellerById(userId);
+            var sales = _saleService.GetSaleBySellerId(userId);
+            if (sales.Count == 0)
+                return NoContent();
+            return Ok(sales);
+        }
+
+        [HttpGet("/user/{userId}/buy")]
+        public ActionResult<Sale> GetSalesByBuyerId(int? userId)
+        {
+            var sales = _saleService.GetSaleByBuyerId(userId);
             if (sales.Count == 0)
                 return NoContent();
             return Ok(sales);
@@ -54,7 +63,6 @@ namespace DevInSales.Api.Controllers
             {
                 return NotFound(ex.Message);
             }
-
         }
     }
 }

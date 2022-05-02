@@ -58,9 +58,14 @@ namespace DevInSales.Core.Services
                 .ToList();
         }
 
-        public List<Sale> GetSellerById(int? userId)
+        public List<Sale> GetSaleBySellerId(int? userId)
         {
             return _context.Sales.Where(p => p.SellerId == userId).ToList();
+        }
+
+        public List<Sale> GetSaleByBuyerId(int? userId)
+        {
+            return _context.Sales.Where(p => p.BuyerId == userId).ToList();
         }
     }
 }

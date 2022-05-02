@@ -9,6 +9,8 @@ namespace DevInSales.Core.Interfaces
         
         public int CreateSaleByUserId(Sale sale);
         
-        public List<Sale> GetSellerById(int? userId);
+        public List<Sale> GetSaleBySellerId(int? userId);
+
+        public List<Sale> GetSaleByBuyerId(int? userId);
     }
 }

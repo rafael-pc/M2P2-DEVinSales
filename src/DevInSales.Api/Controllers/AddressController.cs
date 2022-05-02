@@ -50,7 +50,30 @@ namespace DevInSales.Api.Controllers
       return CreatedAtAction(nameof(GetAll), new { stateId, cityId }, address.Id);
     }
 
+    /// <summary>
+    /// Atualiza as propriedades do endereço especificado.
+    /// </summary>
+    /// <remarks>
+    /// Propriedades opcionais: Street, Cep, Number, Complement.
+    /// Exemplo:
+    ///    PATCH api/Address/addressId
+    ///    {
+    ///       "street": "string",
+    ///       "number": 0,
+    ///       "complement": "string",
+    ///       "cep": "string"
+    ///     }
+    /// </remarks>
+    /// <param name="addressId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <response code="204">A atualização teve sucesso.</response>
+    /// <response code="400">Bad Request. Nenhuma propriedade foi informada no corpo ou o formato é inválido.</response>
+    /// <response code="404">Not Found. O endereço solicitado não existe.</response>
     [HttpPatch("{addressId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult UpdateAddress(int addressId, UpdateAddress model)
     {
       if (model.Street == null && model.Cep == null && model.Number == null && model.Complement == null)

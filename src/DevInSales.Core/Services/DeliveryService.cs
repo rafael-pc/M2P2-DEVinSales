@@ -20,7 +20,7 @@ namespace DevInSales.Core.Services
                 .ToList();
             }
             return _context.Deliveries
-                .Where(p => p.AdressId == idAddress || p.SaleId == saleId)
+                .Where(p => p.AddressId == idAddress || p.SaleId == saleId)
                 .ToList();
         }
     }

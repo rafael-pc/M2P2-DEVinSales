@@ -14,17 +14,17 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.DeliveryForecast)
-                .HasColumnType("timestamp");
+                .HasColumnType("timestamptz");
 
             builder.HasOne(p => p.Sale)
                 .WithMany()
                 .HasForeignKey(p => p.SaleId)
-                .OnDelete(DeleteBehavior.NoAction);           
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.Address)
                 .WithMany()
-                .HasForeignKey(p => p.AdressId)
-                .OnDelete(DeleteBehavior.NoAction);                 
+                .HasForeignKey(p => p.AddressId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

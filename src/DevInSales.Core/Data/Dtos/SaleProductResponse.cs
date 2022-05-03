@@ -8,6 +8,7 @@ namespace DevInSales.Core.Data.Dtos
 {
     public class SaleProductResponse
     {
+
         public string ProductName { get; private set; }
         public int Amount { get; private set; }
         public decimal UnitPrice { get; private set; }
@@ -19,6 +20,6 @@ namespace DevInSales.Core.Data.Dtos
             Amount = amount;
             UnitPrice = unitPrice;
             Total = total;
-        }
+        }    
     }
 }

@@ -1,9 +1,11 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
+
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Core.Services
+
 {
     public class DeliveryService : IDeliveryService
     {
@@ -14,6 +16,7 @@ namespace DevInSales.Core.Services
         }
         public List<Delivery> GetBy(int? idAddress, int? saleId)
         {
+
             if (!idAddress.HasValue && !saleId.HasValue)
             {
                 return _context.Deliveries

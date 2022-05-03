@@ -1,6 +1,7 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
+
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,7 +70,6 @@ namespace DevInSales.Core.Services
         }
         public void UpdateUnitPrice(int saleId, int productId, decimal price)
         {
-            //Validar se o saleId existe mesmo
             Sale? sale = _context.Sales
                 .FirstOrDefault(p => p.Id == saleId);
             if (sale == null)
@@ -88,5 +88,6 @@ namespace DevInSales.Core.Services
             
             _context.SaveChanges();            
         }        
+
     }
 }

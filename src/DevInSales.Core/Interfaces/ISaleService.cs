@@ -1,6 +1,7 @@
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
 
+
 namespace DevInSales.Core.Interfaces
 {
     public interface ISaleService
@@ -14,5 +15,6 @@ namespace DevInSales.Core.Interfaces
         public List<Sale> GetSaleByBuyerId(int? userId);
        
         public void UpdateUnitPrice(int saleId, int productId, decimal price);
+
     }
 }

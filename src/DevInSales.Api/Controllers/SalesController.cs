@@ -63,7 +63,22 @@ namespace DevInSales.Api.Controllers
             {
                 return NotFound(ex.Message);
             }
-
+        }
+        [HttpPatch("{saleId}/product/{productId}/price/{unitPrice}")]
+        public ActionResult UpdateUnitPrice(int saleId, int productId, decimal unitPrice)
+        {
+            try
+            {
+                _saleService.UpdateUnitPrice(saleId, productId, unitPrice);
+                return NoContent();
+            }
+            catch(ArgumentException ex){
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }            
         }
 
         [HttpPost("/user/{userId}/buy")]

@@ -67,5 +67,26 @@ namespace DevInSales.Core.Services
         {
             return _context.Sales.Where(p => p.BuyerId == userId).ToList();
         }
+        public void UpdateUnitPrice(int saleId, int productId, decimal price)
+        {
+            //Validar se o saleId existe mesmo
+            Sale? sale = _context.Sales
+                .FirstOrDefault(p => p.Id == saleId);
+            if (sale == null)
+                throw new Exception(); 
+
+            SaleProduct? saleproduct = _context.SaleProducts                           
+                .FirstOrDefault(p => p.ProductId == productId);
+
+            if (saleproduct == null)
+                throw new Exception();  
+                  
+            if(price <= 0)
+                throw new ArgumentException();
+                
+            saleproduct.UpdateUnitPrice(price);         
+            
+            _context.SaveChanges();            
+        }        
     }
 }

@@ -2,6 +2,7 @@ using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Api.Controllers
 {
@@ -105,6 +106,30 @@ namespace DevInSales.Api.Controllers
             _addressService.Add(address);
 
             return CreatedAtAction(nameof(GetAll), new { stateId, cityId }, address.Id);
+        }
+
+        /// <summary>
+        /// Deletar um endereço
+        /// </summary>
+        /// <response code="204">Endereço deletado com sucesso</response>
+        /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
+        /// <response code="404">Not Found, endereço não encontrado.</response>
+        [HttpDelete("/address/{addressId}")]
+        public ActionResult DeleteAddress(int addressId)
+        {
+            var address = _addressService.GetById(addressId);
+
+            if (address == null)
+                return NotFound();
+            try
+            {
+                _addressService.Delete(address);
+                return NoContent();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

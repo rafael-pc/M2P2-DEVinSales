@@ -1,9 +1,11 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+
+using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevInSales.Core.Service
+namespace DevInSales.Core.Services
+
 {
     public class DeliveryService : IDeliveryService
     {
@@ -14,14 +16,15 @@ namespace DevInSales.Core.Service
         }
         public List<Delivery> GetBy(int? idAddress, int? saleId)
         {
-            if(!idAddress.HasValue && !saleId.HasValue)
-            {                
-                return _context.Deliveries      
+
+            if (!idAddress.HasValue && !saleId.HasValue)
+            {
+                return _context.Deliveries
                 .ToList();
             }
-            return _context.Deliveries                                         
-                .Where(p => p.AdressId == idAddress || p.SaleId == saleId)
+            return _context.Deliveries
+                .Where(p => p.AddressId == idAddress || p.SaleId == saleId)
                 .ToList();
-        }        
+        }
     }
 }

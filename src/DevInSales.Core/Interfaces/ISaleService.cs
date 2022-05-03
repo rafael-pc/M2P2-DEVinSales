@@ -1,15 +1,20 @@
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
 
-namespace DevInSales.Core.Interface
+
+namespace DevInSales.Core.Interfaces
 {
     public interface ISaleService
     {
-        //GetSale por Id
         public SaleResponse GetSaleById(int id);
-        //PostSale
-        public int CreateSale(Sale sale);
-        //Patch
-        //Aguardando...        
+        
+        public int CreateSaleByUserId(Sale sale);
+        
+        public List<Sale> GetSaleBySellerId(int? userId);
+
+        public List<Sale> GetSaleByBuyerId(int? userId);
+       
+        public void UpdateUnitPrice(int saleId, int productId, decimal price);
+
     }
 }

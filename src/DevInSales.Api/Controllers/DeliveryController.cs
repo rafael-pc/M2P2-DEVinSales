@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 
 namespace DevInSales.Api.Controllers
 {
@@ -16,11 +16,11 @@ namespace DevInSales.Api.Controllers
         }
         [HttpGet]
         public ActionResult<Delivery> GetDelivery(int? idAddress, int? saleId)
-        {      
-            var delivery = _deliveryService.GetBy(idAddress,saleId);
+        {
+            var delivery = _deliveryService.GetBy(idAddress, saleId);
             if (delivery.Count == 0)
                 return NoContent();
-            return Ok(delivery);                           
-        }        
+            return Ok(delivery);
+        }
     }
 }

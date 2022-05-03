@@ -1,6 +1,6 @@
 using DevInSales.Core.Data.Context;
-using DevInSales.Core.Interface;
-using DevInSales.Core.Service;
+using DevInSales.Core.Interfaces;
+using DevInSales.Core.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

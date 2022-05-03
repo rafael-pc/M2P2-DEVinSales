@@ -1,11 +1,11 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
-namespace DevInSales.Core.Service
+using DevInSales.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace DevInSales.Core.Services
 {
     public class SaleService : ISaleService
     {
@@ -15,9 +15,22 @@ namespace DevInSales.Core.Service
         {
             _context = context;
         }
-        public int CreateSale(Sale sale)
+        public int CreateSaleByUserId(Sale sale)
         {
-            throw new NotImplementedException();
+            
+            if (sale.SaleDate == DateTime.MinValue)
+                sale.SetSaleDateToToday();
+            if (sale.BuyerId == 0 || sale.SellerId == 0)
+                throw new ArgumentNullException("Id não pode ser nulo nem zero.");
+            if (!_context.Users.Any(user => user.Id == sale.BuyerId))
+                throw new ArgumentException("BuyerId não encontrado.");
+            if (!_context.Users.Any(user => user.Id == sale.SellerId))
+                throw new ArgumentException("SellerId não encontrado.");
+
+            _context.Sales.Add(sale);
+            _context.SaveChanges();
+
+            return sale.Id;
         }
 
         public SaleResponse GetSaleById(int id)
@@ -45,5 +58,36 @@ namespace DevInSales.Core.Service
                 .Select(p => new SaleProductResponse(p.Products.Name, p.Amount, p.UnitPrice, p.Amount * p.UnitPrice))
                 .ToList();
         }
+
+        public List<Sale> GetSaleBySellerId(int? userId)
+        {
+            return _context.Sales.Where(p => p.SellerId == userId).ToList();
+        }
+
+        public List<Sale> GetSaleByBuyerId(int? userId)
+        {
+            return _context.Sales.Where(p => p.BuyerId == userId).ToList();
+        }
+        public void UpdateUnitPrice(int saleId, int productId, decimal price)
+        {
+            Sale? sale = _context.Sales
+                .FirstOrDefault(p => p.Id == saleId);
+            if (sale == null)
+                throw new Exception(); 
+
+            SaleProduct? saleproduct = _context.SaleProducts                           
+                .FirstOrDefault(p => p.ProductId == productId);
+
+            if (saleproduct == null)
+                throw new Exception();  
+                  
+            if(price <= 0)
+                throw new ArgumentException();
+                
+            saleproduct.UpdateUnitPrice(price);         
+            
+            _context.SaveChanges();            
+        }        
+
     }
 }

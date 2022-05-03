@@ -2,6 +2,7 @@ using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Api.Controllers
 {
@@ -120,10 +121,15 @@ namespace DevInSales.Api.Controllers
 
             if (address == null)
                 return NotFound();
-
-            _addressService.Delete(address);
-
-            return NoContent();
+            try
+            {
+                _addressService.Delete(address);
+                return NoContent();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

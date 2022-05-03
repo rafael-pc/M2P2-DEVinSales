@@ -76,12 +76,12 @@ namespace DevInSales.Api.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult UpdateAddress(int addressId, UpdateAddress model)
     {
-      if (model.Street == null && model.Cep == null && model.Number == null && model.Complement == null)
-        return BadRequest();
-
       var address = _addressService.GetById(addressId);
       if (address == null)
         return NotFound();
+
+      if (model.Street == null && model.Cep == null && model.Number == null && model.Complement == null)
+        return BadRequest();
 
       if (model.Street != null)
         address.Street = model.Street;

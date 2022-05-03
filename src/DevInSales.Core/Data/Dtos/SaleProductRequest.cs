@@ -26,7 +26,7 @@ namespace DevInSales.Core.Data.Dtos
         public SaleProduct ConvertIntoSaleProduct(int saleId)
         {
 
-            return new SaleProduct(saleId, ProductId, UnitPrice, Amount);
+            return new SaleProduct(saleId, ProductId, UnitPrice.Value, Amount.Value);
 
         }
     }

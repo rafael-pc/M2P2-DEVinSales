@@ -34,16 +34,18 @@ namespace DevInSales.Api.Controllers
         {
             try
             {
+                if (saleProduct.ProductId <= 0)
+                    return BadRequest();
+
+                if (saleProduct.Amount == null)
+                    saleProduct.Amount = 1;
+                
+
                 var id = _saleProductService.CreateSaleProduct(saleId, saleProduct);
                 return CreatedAtAction(nameof(GetSaleProductById), new { saleProductId = id }, id);
 
-
+                
             }
-            catch (ArgumentNullException)
-            {
-                return BadRequest();
-            }
-
             catch(ArgumentException ex)
             {
                 if(ex.Message.Contains("não encontrado."))

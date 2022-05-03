@@ -25,25 +25,16 @@ namespace DevInSales.Core.Service
         public int CreateSaleProduct(int saleId, SaleProductRequest saleProduct)
         {
 
-            if (saleProduct.UnitPrice == null)
-                saleProduct.UnitPrice = _context.Products.FirstOrDefault(p => p.Id == saleProduct.ProductId).SuggestedPrice;
-
-            if (saleProduct.Amount == null)
-                saleProduct.Amount = 1;
-
-            if (saleProduct.ProductId == null)
-                throw new ArgumentNullException();
-
             if (!_context.Products.Any(p => p.Id == saleProduct.ProductId) || !_context.Sales.Any(p => p.Id == saleId))
                 throw new ArgumentException("ProductId ou SaleId não encontrado.");
+
+            if (saleProduct.UnitPrice == null)
+                saleProduct.UnitPrice = _context.Products.FirstOrDefault(p => p.Id == saleProduct.ProductId).SuggestedPrice;
 
             if (saleProduct.UnitPrice <= 0 || saleProduct.Amount <= 0)
                 throw new ArgumentException("Preço ou quantidade não podem ser negativos.");
 
             
-           
-
-
             var saleProductEntity = saleProduct.ConvertIntoSaleProduct(saleId);
             _context.SaleProducts.Add(saleProductEntity);
             _context.SaveChanges();

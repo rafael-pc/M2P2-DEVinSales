@@ -12,5 +12,7 @@ namespace DevInSales.Core.Interfaces
         public List<Sale> GetSaleBySellerId(int? userId);
 
         public List<Sale> GetSaleByBuyerId(int? userId);
+       
+        public void UpdateUnitPrice(int saleId, int productId, decimal price);
     }
 }

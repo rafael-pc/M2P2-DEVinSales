@@ -9,17 +9,9 @@ namespace DevInSales.Core.Services
   public class AddressService : IAddressService
   {
     private readonly DataContext _context;
-
     public AddressService(DataContext context)
     {
       _context = context;
-    }
-
-    public Address GetById(int addressId)
-    {
-      return _context.Addresses
-          .Include(p => p.City)
-          .FirstOrDefault(p => p.Id == addressId);
     }
     public List<ReadAddress> GetAll(int? stateId, int? cityId, string? street, string? cep)
     {
@@ -44,11 +36,19 @@ namespace DevInSales.Core.Services
       _context.SaveChanges();
     }
 
+    public Address? GetById(int addressId)
+    {
+      return _context.Addresses.FirstOrDefault(p => p.Id == addressId);
+    }
+    public void Delete(Address address)
+    {
+      _context.Addresses.Remove(address);
+      _context.SaveChanges();
+    }
     public void Update(Address address)
     {
       _context.Addresses.Update(address);
       _context.SaveChanges();
     }
-    
   }
 }

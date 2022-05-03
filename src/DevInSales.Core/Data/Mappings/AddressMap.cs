@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DevInSales.Core.Data.Mappings
 {
-    public class AdressMap : IEntityTypeConfiguration<Address>
+    public class AddressMap : IEntityTypeConfiguration<Address>
     {
 
         public void Configure(EntityTypeBuilder<Address> builder)
@@ -30,7 +30,8 @@ namespace DevInSales.Core.Data.Mappings
 
             builder.Property(p => p.Complement)
                 .HasMaxLength(255)
-                .IsUnicode(false);
+                .IsUnicode(false)
+                .IsRequired(false);
 
             builder.Property(p => p.Number)
                 .IsRequired();
@@ -38,7 +39,6 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasOne(p => p.City)
                 .WithMany(p => p.Addresses)
                 .HasForeignKey(p => p.CityId);
-                
         }
     }
 }

@@ -20,14 +20,18 @@ builder.Services.AddScoped<IStateService, StateService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
-    c.SwaggerDoc("v1", new OpenApiInfo{
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
         Title = "DevInSales API",
         Version = "v1",
         Description = "Projeto 2 do módulo 2 do curso DevInHouse da turma WPP",
-        Contact = new OpenApiContact{
+        Contact = new OpenApiContact
+        {
             Name = "Turma WPP",
             Url = new Uri("https://github.com/DEVin-Way2-Pixeon-Paradigma/M2P2-DEVinSales")
         }

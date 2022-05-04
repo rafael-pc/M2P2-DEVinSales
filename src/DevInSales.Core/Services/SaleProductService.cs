@@ -1,7 +1,7 @@
 ﻿using DevInSales.Core.Data.Context;
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Service
+namespace DevInSales.Core.Services
 {
     public class SaleProductService : ISaleProductService
     {

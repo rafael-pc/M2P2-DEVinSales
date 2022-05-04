@@ -1,12 +1,12 @@
 ﻿using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
-    [Route("/sales/")]
+    [Route("api/sales/")]
 
     public class SaleProductController : ControllerBase
     {

@@ -89,5 +89,30 @@ namespace DevInSales.Core.Services
             _context.SaveChanges();            
         }        
 
+        public int CreateDeliveryForASale(Delivery delivery)
+        {
+            Sale? sale = _context.Sales.FirstOrDefault(p => p.Id == delivery.SaleId);
+
+            if (sale == null)
+                throw new ArgumentException("Não existe venda com esse Id.","saleId");
+
+
+            Address? address = _context.Addresses.FirstOrDefault(p => p.Id == delivery.AddressId);
+
+            if (address == null)
+                throw new ArgumentException("Não existe endereço com esse Id.", "AddressId");
+
+
+            _context.Deliveries.Add(delivery);
+            _context.SaveChanges();
+
+            return delivery.Id;
+
+        }
+
+        public Delivery? GetDeliveryById(int deliveryId)
+        {
+            return _context.Deliveries.FirstOrDefault(p => p.Id == deliveryId);
+        }
     }
 }

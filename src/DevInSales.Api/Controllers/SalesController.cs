@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
-    [Route("/sales/")]
+    [Route("api/sales/")]
 
     public class SalesController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace DevInSales.Api.Controllers
             return Ok(sale);
         }
 
-        [HttpGet("/user/{userId}/sales")]
+        [HttpGet("/api/user/{userId}/sales")]
         public ActionResult<Sale> GetSalesBySellerId(int? userId)
         {
             var sales = _saleService.GetSaleBySellerId(userId);
@@ -37,7 +37,7 @@ namespace DevInSales.Api.Controllers
             return Ok(sales);
         }
 
-        [HttpGet("/user/{userId}/buy")]
+        [HttpGet("/api/user/{userId}/buy")]
         public ActionResult<Sale> GetSalesByBuyerId(int? userId)
         {
             var sales = _saleService.GetSaleByBuyerId(userId);
@@ -46,7 +46,7 @@ namespace DevInSales.Api.Controllers
             return Ok(sales);
         }
 
-        [HttpPost("/user/{userId}/sales")]
+        [HttpPost("/api/user/{userId}/sales")]
         public ActionResult<int> CreateSaleBySellerId(int userId, SaleBySellerRequest saleRequest)
         {
             try
@@ -81,7 +81,7 @@ namespace DevInSales.Api.Controllers
             }            
         }
 
-        [HttpPost("/user/{userId}/buy")]
+        [HttpPost("/api/user/{userId}/buy")]
         public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
         {
             try
@@ -99,5 +99,48 @@ namespace DevInSales.Api.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPost("{saleId}/deliver")]
+        public ActionResult<int> CreateDeliveryForASale(int saleId, DeliveryRequest deliveryRequest)
+        {
+            try
+            {
+                if(deliveryRequest.AddressId <= 0)
+                    return BadRequest("AddressId não pode ser nulo nem zero.");
+
+                if (deliveryRequest.DeliveryForecast == DateTime.MinValue)
+                    deliveryRequest.DeliveryForecast = DateTime.Now.AddDays(7).ToUniversalTime();
+
+                if (deliveryRequest.DeliveryForecast < DateTime.Now.ToUniversalTime())
+                    throw new ArgumentException("Data e horário não podem ser anterior ao atual.", "DeliveryForecast");
+
+                Delivery delivery = deliveryRequest.ConvertToEntity(saleId);
+
+                int id = _saleService.CreateDeliveryForASale(delivery);
+
+                return CreatedAtAction(nameof(GetDeliveryById), new { deliveryId = id }, id);
+            }
+            catch (ArgumentException ex)
+            {
+                if(ex.ParamName.Equals("DeliveryForecast"))
+                    return BadRequest(ex.Message);
+
+                if(ex.ParamName.Equals("saleId") || ex.ParamName.Equals("AddressId"))
+                    return NotFound(ex.Message);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [HttpGet("/api/delivery/{deliveryId}")]
+        public ActionResult<Delivery> GetDeliveryById(int deliveryId)
+        {
+            Delivery delivery = _saleService.GetDeliveryById(deliveryId);
+            if (delivery == null)
+                return NoContent();
+            return Ok(delivery);
+        }
+
     }
 }

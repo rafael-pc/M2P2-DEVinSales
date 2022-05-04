@@ -16,5 +16,8 @@ namespace DevInSales.Core.Interfaces
        
         public void UpdateUnitPrice(int saleId, int productId, decimal price);
 
+        public int CreateDeliveryForASale(Delivery delivery);
+
+        public Delivery GetDeliveryById(int deliveryId);
     }
 }

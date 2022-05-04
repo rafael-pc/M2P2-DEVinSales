@@ -21,5 +21,10 @@ namespace DevInSales.Core.Entities
         {            
             UnitPrice = unitPrice;            
         }          
+
+        public void UpdateAmount(int amount)
+        {
+            Amount = amount;
+        }
     }
 }

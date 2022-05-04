@@ -81,6 +81,28 @@ namespace DevInSales.Api.Controllers
             }            
         }
 
+        [HttpPatch("{saleId}/product/{productId}/amount/{amount}")]
+
+        public ActionResult UpdateAmount (int saleId, int productId, int amount)
+        {
+
+            try
+            {
+
+                _saleService.UpdateAmount(saleId, productId, amount);
+                return NoContent();
+
+            }
+            catch (ArgumentException ex)
+            {
+                if (ex.ParamName.Equals("saleId") || ex.ParamName.Equals("productId"))
+                    return NotFound(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpPost("/api/user/{userId}/buy")]
         public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
         {
@@ -112,7 +134,7 @@ namespace DevInSales.Api.Controllers
                     deliveryRequest.DeliveryForecast = DateTime.Now.AddDays(7).ToUniversalTime();
 
                 if (deliveryRequest.DeliveryForecast < DateTime.Now.ToUniversalTime())
-                    throw new ArgumentException("Data e horário não podem ser anterior ao atual.", "DeliveryForecast");
+                    return BadRequest("Data e horário não podem ser anterior ao atual.");
 
                 Delivery delivery = deliveryRequest.ConvertToEntity(saleId);
 
@@ -122,13 +144,13 @@ namespace DevInSales.Api.Controllers
             }
             catch (ArgumentException ex)
             {
-                if(ex.ParamName.Equals("DeliveryForecast"))
-                    return BadRequest(ex.Message);
-
+                
                 if(ex.ParamName.Equals("saleId") || ex.ParamName.Equals("AddressId"))
                     return NotFound(ex.Message);
 
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                
+                return BadRequest(ex.Message);
+
             }
 
         }

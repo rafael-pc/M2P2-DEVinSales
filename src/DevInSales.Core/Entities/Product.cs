@@ -26,8 +26,5 @@ namespace DevInSales.Core.Entities
         [Required(ErrorMessage = "O Campo {0} é obrigatorio")]
         [Range(1,(double)decimal.MaxValue)]
         public decimal SuggestedPrice { get; private set; }
-
-        [JsonIgnore]
-        public ICollection<SaleProduct>? SaleProducts { get; private set; }
     }
 }

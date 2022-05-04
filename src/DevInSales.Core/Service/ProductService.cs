@@ -21,7 +21,7 @@ namespace DevInSales.Core.Service
         // obtém o produto por id 
         public Product? ObterProductPorId(int id)
         {
-            return _context.Products.Include(p => p.SaleProducts).FirstOrDefault(p => p.Id == id);
+            return _context.Products.FirstOrDefault(p => p.Id == id);
         }
 
         // verifica se o nome já existe na base de dados

@@ -14,6 +14,12 @@ namespace DevInSales.Api.Controllers
         {
             _deliveryService = deliveryService;
         }
+        /// <summary>
+        /// Busca uma lista de entregas.
+        /// </summary>
+        ///<returns>Retorna uma lista de entregas à depender do parâmetro enviado (SaleId ou IdAdress).</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         [HttpGet]
         public ActionResult<Delivery> GetDelivery(int? idAddress, int? saleId)
         {

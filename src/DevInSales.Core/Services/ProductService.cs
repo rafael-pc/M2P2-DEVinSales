@@ -1,15 +1,16 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
-using DevInSales.Core.Interface;
+using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevInSales.Core.Service
+namespace DevInSales.Core.Services
 {
     public class ProductService : IProductService
     {
         private readonly DataContext _context;
 
-        public ProductService(DataContext context) {
+        public ProductService(DataContext context)
+        {
             _context = context;
         }
         public void Atualizar(Product produtoOriginal, Product produtoAtualizado)
@@ -27,12 +28,13 @@ namespace DevInSales.Core.Service
         // verifica se o nome já existe na base de dados
         public bool ProdutoExiste(string nome)
         {
-            var produtos  = _context.Products.Where(produto => (produto.Name == nome)).ToList();
-            return produtos.Count > 0 ? true:false;
+            var produtos = _context.Products.Where(produto => (produto.Name == nome)).ToList();
+            return produtos.Count > 0 ? true : false;
         }
-        public void Delete(int id) {
+        public void Delete(int id)
+        {
             var produto = ObterProductPorId(id);
-            if(produto == null)
+            if (produto == null)
                 throw new Exception("o Produto não existe");
             _context.Products.Remove(produto);
             _context.SaveChanges();

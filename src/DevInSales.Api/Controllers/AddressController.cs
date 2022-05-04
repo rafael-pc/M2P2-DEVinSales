@@ -83,7 +83,7 @@ namespace DevInSales.Api.Controllers
     /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
     /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
     /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
-    [HttpPost("/state/{stateId}/city/{cityId}/address")]
+    [HttpPost("/api/state/{stateId}/city/{cityId}/address")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -118,7 +118,7 @@ namespace DevInSales.Api.Controllers
     /// <response code="204">Endereço deletado com sucesso</response>
     /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
     /// <response code="404">Not Found, endereço não encontrado.</response>
-    [HttpDelete("/address/{addressId}")]
+    [HttpDelete("{addressId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

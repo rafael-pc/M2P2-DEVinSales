@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Interface
+namespace DevInSales.Core.Interfaces
 {
     public interface ISaleProductService
     {

@@ -5,7 +5,7 @@ using DevInSales.Core.Interfaces;
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
-    [Route("/deliver")]
+    [Route("api/deliver")]
     public class DeliveryController : ControllerBase
     {
         private readonly IDeliveryService _deliveryService;

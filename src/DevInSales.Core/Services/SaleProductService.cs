@@ -42,7 +42,7 @@ namespace DevInSales.Core.Services
             return saleProductEntity.Id;
         }
 
-        // Criar SaleProductResponse
+       
         public int GetSaleProductById(int saleProductId)
         {
             SaleProduct? saleProduct = _context.SaleProducts
@@ -52,11 +52,10 @@ namespace DevInSales.Core.Services
 
             if (saleProduct == null)
             {
-                // Corrigir retorno
+                
                 return 0;
             }
 
-            //Corrigir retorno com SaleProductResponse
             return saleProduct.Id;
 
         }

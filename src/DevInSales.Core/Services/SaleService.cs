@@ -87,7 +87,28 @@ namespace DevInSales.Core.Services
             saleproduct.UpdateUnitPrice(price);         
             
             _context.SaveChanges();            
-        }        
+        }  
+        
+        public void UpdateAmount(int saleId, int productId, int amount)
+        {
+
+            if (!_context.Sales.Any(p => p.Id == saleId))
+                throw new ArgumentException("Não existe venda com esse Id.", "saleId");
+
+            var saleProduct = _context.SaleProducts.FirstOrDefault(p=> p.ProductId == productId);
+
+            if (saleProduct == null)
+                throw new ArgumentException("Não existe este produto nesta venda.", "productId");
+
+
+            if (amount <= 0)
+                throw new ArgumentException("Quantidade não pode ser menor ou igual a zero.", "amount");
+
+
+            saleProduct.UpdateAmount(amount);
+
+            _context.SaveChanges();
+        }
 
         public int CreateDeliveryForASale(Delivery delivery)
         {

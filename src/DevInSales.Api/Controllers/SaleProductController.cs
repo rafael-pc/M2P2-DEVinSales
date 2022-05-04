@@ -16,7 +16,8 @@ namespace DevInSales.Api.Controllers
         {
             _saleProductService = saleProductService;
         }
-
+        // Endpoint criado apenas para servir como path do POST {saleId}/item
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("saleById/item")]
 
         public ActionResult<int> GetSaleProductById(int saleProductId)
@@ -27,9 +28,15 @@ namespace DevInSales.Api.Controllers
 
             return Ok(id);
         }
-
+        /// <summary>
+        /// Cadastra um produto em uma venda.
+        /// </summary>
+        ///<returns> Retorna um id da tabela saleProduct.</returns>
+        /// <response code="201">Criado com sucesso.</response>
+        /// <response code="400">Bad Request, caso não seja enviado um productId ou quando a quantidade/preço enviados forem menor ou igual a zero.</response>
+        /// <response code="404">Not Found, caso o productId ou o saleId não existam.</response>
         [HttpPost("{saleId}/item")]
-
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateSaleProduct(int saleId, SaleProductRequest saleProduct)
         {
             try
@@ -39,27 +46,27 @@ namespace DevInSales.Api.Controllers
 
                 if (saleProduct.Amount == null)
                     saleProduct.Amount = 1;
-                
+
 
                 var id = _saleProductService.CreateSaleProduct(saleId, saleProduct);
                 return CreatedAtAction(nameof(GetSaleProductById), new { saleProductId = id }, id);
 
-                
+
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
-                if(ex.Message.Contains("não encontrado."))
+                if (ex.Message.Contains("não encontrado."))
                     return NotFound();
 
-                if(ex.Message.Contains("não podem ser negativos."))
+                if (ex.Message.Contains("não podem ser negativos."))
                     return BadRequest();
 
                 return BadRequest();
-            
+
             }
 
-      
-            
+
+
 
 
         }

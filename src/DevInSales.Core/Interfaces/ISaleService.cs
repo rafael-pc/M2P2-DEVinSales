@@ -1,6 +1,6 @@
 using DevInSales.Core.Entities;
 
-namespace DevInSales.Core.Interface
+namespace DevInSales.Core.Interfaces
 {
     public interface ISaleService
     {

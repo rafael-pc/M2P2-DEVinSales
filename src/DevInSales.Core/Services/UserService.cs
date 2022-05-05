@@ -12,6 +12,24 @@ namespace DevInSales.Core.Entities
             _context = context; 
         }
 
+         public int CriarUser(User user)
+        {
+            var EmailValido = new EmailValidate();
+
+            if (!EmailValido.IsValidEmail(user.Email) || _context.Users.Any(x=> x.Email == user.Email))
+                return 0;
+
+            if (user.BirthDate.AddYears(18) > DateTime.Now)
+                return 0;
+
+            if (user.Password.Length < 4)
+                return 0;
+    
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            return user.Id;
+        } 
+
        private bool StringValida(string? text)
         {
             return !String.IsNullOrWhiteSpace(text);

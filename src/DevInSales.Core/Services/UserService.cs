@@ -38,15 +38,24 @@ namespace DevInSales.Core.Entities
         public List<User> ObterUsers(string? name, string? DataMin, string? DataMax)
         {
            var result = _context.Users.Where(StringValida(name) && StringValida(DataMin) && StringValida(DataMax) ?
-                        x => x.Name == name && x.BirthDate >= DateTime.Parse(DataMin) && x.BirthDate <= DateTime.Parse(DataMax) : // Se todos os campos forem validos, retorna todos os usuarios de mesmo nome entre a data minima e data maxima
-                        StringValida(name) && StringValida(DataMin) ? x => x.Name == name && x.BirthDate >= DateTime.Parse(DataMin) ://  se o nome e data minima forem validos, retorna todos os usuarios de mesmo nome e maior ou igual a data minima
-                        StringValida(name) && StringValida(DataMax) ? x => x.Name == name && x.BirthDate <= DateTime.Parse(DataMax) :// se o nome e data maxima forem validos, retorna todos os usuarios de mesmo nome e menor ou igual a data maxima
-                        StringValida(DataMin) && StringValida(DataMax) ? x => x.BirthDate >= DateTime.Parse(DataMin) && x.BirthDate <= DateTime.Parse(DataMax) : // se data minima e data maxima forem validos, retorna todos os usuarios entre a data minima e data maxima
+                        x => x.Name == name && x.BirthDate >= DateTime.Parse(DataMin) && x.BirthDate <= DateTime.Parse(DataMax) : 
+                        StringValida(name) && StringValida(DataMin) ? x => x.Name == name && x.BirthDate >= DateTime.Parse(DataMin) :
+                        StringValida(name) && StringValida(DataMax) ? x => x.Name == name && x.BirthDate <= DateTime.Parse(DataMax) :
+                        StringValida(DataMin) && StringValida(DataMax) ? x => x.BirthDate >= DateTime.Parse(DataMin) && x.BirthDate <= DateTime.Parse(DataMax) :
                         StringValida(name) ? x => x.Name == name :
                         StringValida(DataMin) ? x => x.BirthDate >= DateTime.Parse(DataMin) :
                         StringValida(DataMax) ? x => x.BirthDate <= DateTime.Parse(DataMax) :
                        x => true).ToList();
            return result;
+        }
+        public void RemoverUser(int id){
+            if (id >= 0){
+                var user = _context.Users.FirstOrDefault(user => user.Id == id);
+                if (user != null)
+                    _context.Users.Remove(user); 
+                    _context.SaveChanges();
+
+            }
         }
     }
 }

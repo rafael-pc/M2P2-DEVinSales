@@ -40,5 +40,22 @@ namespace DevInSales.Api.Controllers
 
             return CreatedAtAction(nameof(ObterUserPorId),new {id = id}, id);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult ExcluirUser(int id)
+        {
+            try
+            {
+                _userService.RemoverUser(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("usuario não existe"))
+                    return NotFound();
+                
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
+            }
+        }
     }
 }

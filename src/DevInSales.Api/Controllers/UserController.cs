@@ -28,5 +28,17 @@ namespace DevInSales.Api.Controllers
 
             return Ok(users);
         }
+
+        [HttpPost]
+        public ActionResult CriarUser(User user)
+        {
+            var id = _userService.CriarUser(user);
+
+            if(id == 0){
+                return BadRequest();
+            }
+
+            return CreatedAtAction(nameof(ObterUserPorId),new {id = id}, id);
+        }
     }
 }

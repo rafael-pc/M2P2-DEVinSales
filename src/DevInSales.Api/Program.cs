@@ -1,6 +1,8 @@
 using DevInSales.Core.Data.Context;
+using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using DevInSales.Core.Services;
+using DevInSales.EFCoreApi.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -21,6 +23,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

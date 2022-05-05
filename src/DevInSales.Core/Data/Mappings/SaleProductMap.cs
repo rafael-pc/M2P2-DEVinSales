@@ -10,21 +10,21 @@ namespace DevInSales.Core.Data.Mappings
         {
             builder.ToTable("SaleProducts");
 
-            // Opcional, pois por convenção nossa propriedade já seria a chave primária
+
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.UnitPrice)
                 .HasColumnType("decimal(18,2)");
-            
+
             builder.HasOne(p => p.Sales)
                 .WithMany()
                 .HasForeignKey(p => p.SaleId)
-                .OnDelete(DeleteBehavior.NoAction);           
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.Products)
                 .WithMany()
                 .HasForeignKey(p => p.ProductId)
-                .OnDelete(DeleteBehavior.NoAction);                 
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

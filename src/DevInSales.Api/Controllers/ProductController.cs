@@ -77,5 +77,20 @@ namespace DevInSales.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
             }
         }
+
+        [HttpPost]
+        public ActionResult PostProduct(Product product)
+        {
+            try {
+                var ProductId = _productService.CreateNewProduct(product);
+                if (ProductId == -1)
+                    return BadRequest("O produto já existe na base de dados");
+                return CreatedAtAction(nameof(ObterProdutoPorId), new { id = ProductId }, ProductId);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
+            }
+        }
     }
 }

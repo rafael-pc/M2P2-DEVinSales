@@ -39,5 +39,17 @@ namespace DevInSales.Core.Services
             _context.Products.Remove(produto);
             _context.SaveChanges();
         }
+
+        public List<Product> ObterProdutos(string? name, decimal? priceMin, decimal? priceMax)
+        {
+            
+            if (name != null) 
+                return _context.Products.Where(p => p.Name.Contains(name)).ToList();
+
+            if (priceMin != null && priceMax != null)
+                return _context.Products.Where(p => p.SuggestedPrice >= priceMin && p.SuggestedPrice <= priceMax).ToList();
+
+            return _context.Products.ToList();
+        }
     }
 }

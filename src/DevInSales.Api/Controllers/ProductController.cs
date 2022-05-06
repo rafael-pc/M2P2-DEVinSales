@@ -59,5 +59,23 @@ namespace DevInSales.Api.Controllers
             }
 
         }
+
+        [HttpGet]
+        public ActionResult<List<Product>> GetAll(string? name, decimal? priceMin, decimal? priceMax)
+        {
+            try {
+                if (priceMax<priceMin)
+                    return BadRequest("O preço mínimo não pode ser maior que o preço máximo");
+                
+                var ProductList = _productService.ObterProdutos(name, priceMin, priceMax);
+                if (ProductList.Count == 0 || ProductList == null)
+                    return NoContent();
+                return Ok(ProductList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
+            }
+        }
     }
 }

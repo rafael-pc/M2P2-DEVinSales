@@ -16,6 +16,15 @@ namespace DevInSales.Core.Entities
         }
         public Sale? Sales { get; private set; }
         public Product? Products { get; private set; }
-        
+
+        public void UpdateUnitPrice(decimal unitPrice)
+        {            
+            UnitPrice = unitPrice;            
+        }          
+
+        public void UpdateAmount(int amount)
+        {
+            Amount = amount;
+        }
     }
 }

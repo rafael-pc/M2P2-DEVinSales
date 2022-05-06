@@ -3,6 +3,7 @@ using System;
 using DevInSales.Core.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DevInSales.Core.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220503212453_CorrigindoAddress")]
+    partial class CorrigindoAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +42,7 @@ namespace DevInSales.Core.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Complement")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("character varying(255)");
@@ -130,68 +133,6 @@ namespace DevInSales.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Coca-Cola",
-                            SuggestedPrice = 3.5m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "cerveja Bohemia",
-                            SuggestedPrice = 3.99m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Cerveja Itaipava",
-                            SuggestedPrice = 3.59m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Ceveja Spaten",
-                            SuggestedPrice = 3.49m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Cerveja Heineken",
-                            SuggestedPrice = 5.59m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Cerveja Corona",
-                            SuggestedPrice = 5.99m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Cerveja Stella",
-                            SuggestedPrice = 3.19m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Cerveja Amstel",
-                            SuggestedPrice = 3.49m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Cerveja Budweiser",
-                            SuggestedPrice = 4.19m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Cerveja Brahma",
-                            SuggestedPrice = 3.79m
-                        });
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.Sale", b =>
@@ -456,7 +397,7 @@ namespace DevInSales.Core.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -466,40 +407,6 @@ namespace DevInSales.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Allie.Spencer@manuel.us",
-                            Name = "Allie Spencer",
-                            Password = "661845"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Earnest@kari.biz",
-                            Name = "Lemuel Witting",
-                            Password = "800631"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Adella_Shanahan@kenneth.biz",
-                            Name = "Kari Olson I",
-                            Password = "661342"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Americo.Strosin@kale.tv",
-                            Name = "Marion Nolan DDS",
-                            Password = "661964"
-                        });
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.Address", b =>

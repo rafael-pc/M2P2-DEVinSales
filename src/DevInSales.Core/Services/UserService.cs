@@ -22,15 +22,25 @@ namespace DevInSales.Core.Entities
             if (user.BirthDate.AddYears(18) > DateTime.Now)
                 return 0;
 
-            if (user.Password.Length < 4)
+            if (user.Password.Length < 4 || IsValidPass(user.Password))
                 return 0;
     
             _context.Users.Add(user);
             _context.SaveChanges();
             return user.Id;
         } 
+       
+          public bool IsValidPass(string password)
+        {
+            return password.Length == 0 || password.All(ch => ch == password[0]);
+        }
 
-       private bool StringValida(string? text)
+         public User? ObterPorId(int id)
+        {
+            return _context.Users.Find(id);
+        }
+
+        private bool StringValida(string? text)
         {
             return !String.IsNullOrWhiteSpace(text);
         }
@@ -54,7 +64,6 @@ namespace DevInSales.Core.Entities
                 if (user != null)
                     _context.Users.Remove(user); 
                     _context.SaveChanges();
-
             }
         }
     }

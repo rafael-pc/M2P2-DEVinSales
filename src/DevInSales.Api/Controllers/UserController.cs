@@ -29,6 +29,18 @@ namespace DevInSales.Api.Controllers
             return Ok(users);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<User> ObterUserPorId(int id)
+        {
+            var user = _userService.ObterPorId(id);
+            if (user == null)
+                return NotFound();     
+
+            var UserDto = UserResponse.ConverterParaEntidade(user);      
+
+            return Ok(UserDto);
+        }
+
         [HttpPost]
         public ActionResult CriarUser(User user)
         {

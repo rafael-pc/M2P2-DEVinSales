@@ -14,5 +14,13 @@ namespace DevInSales.Core.Entities
             Name = name;
             BirthDate = birthDate;
         }
+        public User(int id, string email, string password, string name, DateTime birthDate)
+        {
+            Id = id;
+            Email = email;
+            Password = password;
+            Name = name;
+            BirthDate = birthDate;
+        }   
     }
 }

@@ -14,6 +14,13 @@ namespace DevInSales.Core.Entities
             SuggestedPrice = suggestedPrice;
         }
 
+        public Product(int id, string name, decimal suggestedPrice)
+        {
+            Id = id;
+            Name = name;
+            SuggestedPrice = suggestedPrice;
+        }   
+
         public void AtualizarDados(Product produto) {
             Name = produto.Name;
             SuggestedPrice = produto.SuggestedPrice;

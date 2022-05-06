@@ -51,5 +51,17 @@ namespace DevInSales.Core.Services
 
             return _context.Products.ToList();
         }
+
+        public int CreateNewProduct(Product product)
+        {
+            var ProductValidate = _context.Products.Any(p => p.Name == product.Name);
+            if (ProductValidate)
+                return -1;
+            if (product.SuggestedPrice <= 0)
+                return -1;
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product.Id;
+        }
     }
 }

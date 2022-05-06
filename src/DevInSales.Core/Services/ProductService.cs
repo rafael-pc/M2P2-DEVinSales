@@ -39,5 +39,29 @@ namespace DevInSales.Core.Services
             _context.Products.Remove(produto);
             _context.SaveChanges();
         }
+
+        public List<Product> ObterProdutos(string? name, decimal? priceMin, decimal? priceMax)
+        {
+            
+            if (name != null) 
+                return _context.Products.Where(p => p.Name.Contains(name)).ToList();
+
+            if (priceMin != null && priceMax != null)
+                return _context.Products.Where(p => p.SuggestedPrice >= priceMin && p.SuggestedPrice <= priceMax).ToList();
+
+            return _context.Products.ToList();
+        }
+
+        public int CreateNewProduct(Product product)
+        {
+            var ProductValidate = _context.Products.Any(p => p.Name == product.Name);
+            if (ProductValidate)
+                return -1;
+            if (product.SuggestedPrice <= 0)
+                return -1;
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product.Id;
+        }
     }
 }

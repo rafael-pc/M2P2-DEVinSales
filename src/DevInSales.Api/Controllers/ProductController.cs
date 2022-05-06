@@ -59,5 +59,38 @@ namespace DevInSales.Api.Controllers
             }
 
         }
+
+        [HttpGet]
+        public ActionResult<List<Product>> GetAll(string? name, decimal? priceMin, decimal? priceMax)
+        {
+            try {
+                if (priceMax<priceMin)
+                    return BadRequest("O preço mínimo não pode ser maior que o preço máximo");
+                
+                var ProductList = _productService.ObterProdutos(name, priceMin, priceMax);
+                if (ProductList.Count == 0 || ProductList == null)
+                    return NoContent();
+                return Ok(ProductList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult PostProduct(Product product)
+        {
+            try {
+                var ProductId = _productService.CreateNewProduct(product);
+                if (ProductId == -1)
+                    return BadRequest("O produto já existe na base de dados");
+                return CreatedAtAction(nameof(ObterProdutoPorId), new { id = ProductId }, ProductId);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensagem = ex.Message });
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace DevInSales.EFCoreApi.Api.DTOs.Request
         public int Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        
+
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
@@ -22,7 +22,7 @@ namespace DevInSales.EFCoreApi.Api.DTOs.Request
 
         public static UserResponse ConverterParaEntidade(User user)
         {
-            return new UserResponse (user.Id, user.Email, user.Name, user.BirthDate);
+            return new UserResponse(user.Id, user.Email, user.Name, user.BirthDate);
         }
     }
 }

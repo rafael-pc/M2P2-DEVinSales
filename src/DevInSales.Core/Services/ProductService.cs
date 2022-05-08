@@ -27,7 +27,7 @@ namespace DevInSales.Core.Services
         // verifica se o nome já existe na base de dados
         public bool ProdutoExiste(string nome)
         {
-            var produtos = _context.Products.Where(produto => (produto.Name == nome)).ToList();
+            var produtos = _context.Products.Where(produto => (produto.Name.ToUpper() == nome.ToUpper())).ToList();
             return produtos.Count > 0 ? true : false;
         }
         public void Delete(int id)

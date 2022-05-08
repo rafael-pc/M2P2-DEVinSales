@@ -162,7 +162,7 @@ namespace DevInSales.Api.Controllers
         {
             var product = new Product(model.Name, model.SuggestedPrice);
 
-            if (product.Name == model.Name)
+            if (_productService.ProdutoExiste(product.Name))
                 return BadRequest("Esse produto já existe na base de dados");
 
             var ProductId = _productService.CreateNewProduct(product);

@@ -13,9 +13,8 @@ namespace DevInSales.Core.Services
         {
             _context = context;
         }
-        public void Atualizar(Product produtoOriginal, Product produtoAtualizado)
+        public void Atualizar()
         {
-            produtoOriginal.AtualizarDados(produtoAtualizado);
             _context.SaveChanges();
         }
 
@@ -28,7 +27,7 @@ namespace DevInSales.Core.Services
         // verifica se o nome já existe na base de dados
         public bool ProdutoExiste(string nome)
         {
-            var produtos = _context.Products.Where(produto => (produto.Name == nome)).ToList();
+            var produtos = _context.Products.Where(produto => (produto.Name.ToUpper() == nome.ToUpper())).ToList();
             return produtos.Count > 0 ? true : false;
         }
         public void Delete(int id)
@@ -42,23 +41,20 @@ namespace DevInSales.Core.Services
 
         public List<Product> ObterProdutos(string? name, decimal? priceMin, decimal? priceMax)
         {
-            
-            if (name != null) 
-                return _context.Products.Where(p => p.Name.Contains(name)).ToList();
 
-            if (priceMin != null && priceMax != null)
-                return _context.Products.Where(p => p.SuggestedPrice >= priceMin && p.SuggestedPrice <= priceMax).ToList();
+            var query = _context.Products.AsQueryable();
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(p => p.Name.ToUpper().Contains(name.ToUpper()));
+            if (priceMin.HasValue)
+                query = query.Where(p => p.SuggestedPrice >= priceMin);
+            if (priceMax.HasValue)
+                query = query.Where(p => p.SuggestedPrice <= priceMax);
 
-            return _context.Products.ToList();
+            return query.ToList();
         }
 
         public int CreateNewProduct(Product product)
         {
-            var ProductValidate = _context.Products.Any(p => p.Name == product.Name);
-            if (ProductValidate)
-                return -1;
-            if (product.SuggestedPrice <= 0)
-                return -1;
             _context.Products.Add(product);
             _context.SaveChanges();
             return product.Id;

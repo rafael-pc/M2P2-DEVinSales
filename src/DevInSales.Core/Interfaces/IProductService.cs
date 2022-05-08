@@ -4,7 +4,7 @@ namespace DevInSales.Core.Interfaces
 {
     public interface IProductService
     {
-        public void Atualizar(Product produtoOriginal, Product produtoAtualizado);
+        public void Atualizar();
         public Product? ObterProductPorId(int id);
         public bool ProdutoExiste(string nome);
         public void Delete(int id);

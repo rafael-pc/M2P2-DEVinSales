@@ -1,16 +1,54 @@
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
+using DevInSales.Core.Entities.Jwt;
 using DevInSales.Core.Interfaces;
 using DevInSales.Core.Services;
 using DevInSales.EFCoreApi.Core.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+//Chave do Secrets do appsetins.json
+JwtSettings.Secrets = builder.Configuration.GetValue<string>("JWT:Secret");
+JwtSettings.Issuer = builder.Configuration.GetValue<string>("JWT:Issuer");
+JwtSettings.Audience = builder.Configuration.GetValue<string>("JWT:Audience");
+
+//Enconding em ASCII da chave Secrets [array de bytes]
+JwtSettings.Key = Encoding.ASCII.GetBytes(JwtSettings.Secrets);
+
+/// <summary>
+/// Configuração do JWT
+/// </summary>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = JwtSettings.Issuer,
+            ValidAudience = JwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(JwtSettings.Key)
+        };
+    });
+
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultHandler>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -45,6 +83,37 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
     c.IncludeXmlComments(xmlPath);
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Utilizando JWT Authorization para autenticar"
+    });
+
+    var OpenApiReference = new OpenApiReference()
+    {
+        Type = ReferenceType.SecurityScheme,
+        Id = "Bearer"
+    };
+
+    var openApiSecurityScheme = new OpenApiSecurityScheme()
+    {
+        Reference = OpenApiReference
+    };
+
+    var openApiSecuryRequeriment = new OpenApiSecurityRequirement()
+    {
+        {
+            openApiSecurityScheme,
+            Array.Empty<string>()
+        }
+    };
+
+    c.AddSecurityRequirement(openApiSecuryRequeriment);
 });
 
 var app = builder.Build();
@@ -57,7 +126,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

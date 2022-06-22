@@ -2,6 +2,7 @@ using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.EFCoreApi.Api.DTOs.Request;
 using DevInSales.EFCoreApi.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegexExamples;
 
@@ -9,6 +10,7 @@ namespace DevInSales.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
+    [Authorize(Roles = "Administrador")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

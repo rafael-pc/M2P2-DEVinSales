@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
     [Route("api/deliver")]
+    [Authorize(Roles = "Administrador")]
     public class DeliveryController : ControllerBase
     {
         private readonly IDeliveryService _deliveryService;

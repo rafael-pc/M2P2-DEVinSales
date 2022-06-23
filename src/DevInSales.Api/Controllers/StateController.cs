@@ -6,7 +6,6 @@ namespace DevInSales.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administrador")]
     public class StateController : ControllerBase
     {
         private readonly IStateService _stateService;
@@ -36,6 +35,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         [HttpGet]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult GetAll(string? name)
@@ -62,6 +62,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         [HttpGet("{stateId}")]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult GetByStateId(int stateId)

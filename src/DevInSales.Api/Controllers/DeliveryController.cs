@@ -7,7 +7,6 @@ namespace DevInSales.Api.Controllers
 {
     [ApiController]
     [Route("api/deliver")]
-    [Authorize(Roles = "Administrador")]
     public class DeliveryController : ControllerBase
     {
         private readonly IDeliveryService _deliveryService;
@@ -23,6 +22,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         [HttpGet]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         public ActionResult<Delivery> GetDelivery(int? idAddress, int? saleId)
         {
             var delivery = _deliveryService.GetBy(idAddress, saleId);

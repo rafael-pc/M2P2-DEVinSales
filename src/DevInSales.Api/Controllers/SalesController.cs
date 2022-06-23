@@ -9,7 +9,6 @@ namespace DevInSales.Api.Controllers
 {
     [ApiController]
     [Route("api/sales/")]
-    [Authorize(Roles = "Administrador")]
     public class SalesController : ControllerBase
     {
         private readonly ISaleService _saleService;
@@ -26,6 +25,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="404">Not Found, quando o saleId não for encontrado.</response>
         [HttpGet("{saleId}")]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         public ActionResult<SaleResponse> GetSaleById(int saleId)
         {
             var sale = _saleService.GetSaleById(saleId);
@@ -42,6 +42,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma venda.</response>
         [HttpGet("/api/user/{userId}/sales")]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         public ActionResult<Sale> GetSalesBySellerId(int? userId)
         {
             var sales = _saleService.GetSaleBySellerId(userId);
@@ -57,6 +58,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma compra.</response>
         [HttpGet("/api/user/{userId}/buy")]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         public ActionResult<Sale> GetSalesByBuyerId(int? userId)
         {
             var sales = _saleService.GetSaleByBuyerId(userId);
@@ -73,6 +75,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, quando não é enviado um buyerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
         [HttpPost("/api/user/{userId}/sales")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
         public ActionResult<int> CreateSaleBySellerId(int userId, SaleBySellerRequest saleRequest)
@@ -101,6 +104,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, caso o preço digitado seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado</response>
         [HttpPatch("{saleId}/product/{productId}/price/{unitPrice}")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
         public ActionResult UpdateUnitPrice(int saleId, int productId, decimal unitPrice)
@@ -128,6 +132,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, caso a quantidade digitada seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado.</response>
         [HttpPatch("{saleId}/product/{productId}/amount/{amount}")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
         public ActionResult UpdateAmount(int saleId, int productId, int amount)
@@ -157,6 +162,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, quando não enviado um sellerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
         [HttpPost("/api/user/{userId}/buy")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
         {
@@ -184,6 +190,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="404">Not Found, caso não exista um saleId ou um addressId igual ao enviado.</response>
 
         [HttpPost("{saleId}/deliver")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateDeliveryForASale(int saleId, DeliveryRequest deliveryRequest)
         {
@@ -220,6 +227,7 @@ namespace DevInSales.Api.Controllers
         //Endpoint criado apenas para servir como caminho do POST {saleId}/deliver
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("/api/delivery/{deliveryId}")]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         public ActionResult<Delivery> GetDeliveryById(int deliveryId)
         {
             Delivery delivery = _saleService.GetDeliveryById(deliveryId);

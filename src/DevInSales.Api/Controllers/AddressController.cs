@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    [Authorize(Roles = "Administrador")]
+    [Route("api/[controller]")] 
     public class AddressController : ControllerBase
     {
         private readonly IAddressService _addressService;
@@ -56,6 +55,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         [HttpGet]
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult GetAll(int? stateId, int? cityId, string? street, string? cep)
@@ -86,6 +86,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
         [HttpPost("/api/state/{stateId}/city/{cityId}/address")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -121,6 +122,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
         /// <response code="404">Not Found, endereço não encontrado.</response>
         [HttpDelete("{addressId}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -162,6 +164,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request. Nenhuma propriedade foi informada no corpo ou o formato é inválido.</response>
         /// <response code="404">Not Found. O endereço solicitado não existe.</response>
         [HttpPatch("{addressId}")]
+        [Authorize(Roles = "Administrador, Gerente")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
